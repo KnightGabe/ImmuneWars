@@ -7,9 +7,13 @@ public class ShipMovement : MonoBehaviour {
 	Rigidbody rb;
 
 	[SerializeField]
-	float turnSpeed;
-	[SerializeField]
-	float forwardSpeed;
+	float turnSpeed, forwardSpeed, sideSpeed, verticalSpeed, baseSpeed;
+
+	[SerializeField] [Range(0, 1)]
+	float smoothRotation;
+	
+	private float acceleration;
+	private float rotateY, rotateX, thrust, sideWays, vertical;
 
 	// Use this for initialization
 	void Start () {
@@ -22,20 +26,34 @@ public class ShipMovement : MonoBehaviour {
 		Move();
 	}
 
+	private void Update()
+	{
+		GetInputs();
+	}
+
+	void GetInputs()
+	{
+		thrust = Input.GetAxis("Vertical");
+		sideWays = Input.GetAxis("Horizontal");
+		rotateY = Input.GetAxis("Mouse X");
+		rotateX = Input.GetAxis("Mouse Y");
+		vertical = Input.GetAxis("Jump");
+	}
+
 	void Move()
 	{
-		float thrust = Input.GetAxis("Vertical");
-		rb.velocity = (transform.forward * thrust).normalized * forwardSpeed;
+		Vector3 movement = (((transform.forward * thrust) + (transform.up * vertical) - (transform.right * sideWays)).normalized);
+		movement = new Vector3(movement.x * forwardSpeed, movement.y * verticalSpeed, (movement.z * forwardSpeed));
+		rb.velocity = movement + (transform.forward * baseSpeed);
 	}
 
 	void Turn()
 	{
-		float rotateY = Input.GetAxis("Mouse X");
-		float rotateX = Input.GetAxis("Mouse Y");
-		float rotateZ = Input.GetAxis("Horizontal");
-
-		Vector3 rotation = new Vector3(rotateX, rotateY, rotateZ) * turnSpeed;
-
-		rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
+		Vector3 newR = transform.rotation.eulerAngles;
+		newR.x += rotateX *turnSpeed;
+		newR.y += rotateY *turnSpeed;
+		newR.z = 0;
+		Quaternion smoothedRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(newR), smoothRotation);
+		transform.rotation = smoothedRotation;
 	}
 }
