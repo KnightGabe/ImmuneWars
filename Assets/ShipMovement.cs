@@ -4,20 +4,51 @@ using UnityEngine;
 
 public class ShipMovement : MonoBehaviour {
 
-	Rigidbody rb;
+	[Header("Objetos e Componentes")]
+	public GameObject tiro;
+	public Transform tiroPos;
 
+	Rigidbody rb; 
+
+	[Header("Movimentacao")]
 	[SerializeField]
-	float turnSpeed, forwardSpeed, sideSpeed, verticalSpeed, baseSpeed;
+	protected float turnSpeed, forwardSpeed, sideSpeed, verticalSpeed, baseSpeed;
 
 	[SerializeField] [Range(0, 1)]
 	float smoothRotation;
 	
-	private float acceleration;
+	[Header("Inputs")]
 	private float rotateY, rotateX, thrust, sideWays, vertical;
 
+	[SerializeField][Header("Tiro")]
+	protected int DamageBullet;
+
+	[SerializeField][Header("Tiro")]
+	protected float RangeBullet;
+
+	[SerializeField][Header("Tiro")]
+	protected float SpeedBullet;
+
+	[SerializeField][Header("Tiro")]
+	protected float CooldownBullet;
+
+	protected float TimerBullet=0;
+
+	[SerializeField][Header("Misc")]
+	protected float MaxHP;
+	[SerializeField]
+	[Header("Misc")]
+	protected LayerMask enemyLayer;
+	[SerializeField]
+	[Header("Misc")]
+	protected LayerMask myLayer;
+	protected float CurrentHP;
+	public bool canInput = true;
+	public bool canFire;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
+		CurrentHP = MaxHP;
 	}
 	
 	// Update is called once per frame
@@ -28,7 +59,42 @@ public class ShipMovement : MonoBehaviour {
 
 	private void Update()
 	{
-		GetInputs();
+		if (canInput)
+		{
+			GetInputs();
+			Command();
+		}
+		TimerBullet += Time.deltaTime;
+		if (TimerBullet >= CooldownBullet)
+		{
+			canFire = true;
+		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.layer == enemyLayer)
+		{
+			BulletScript enemyBullet = other.GetComponent<BulletScript>();
+			if (enemyBullet != null)
+			{
+				TakeDamage(enemyBullet.damage);
+			}
+		}
+	}
+
+	void TakeDamage(int damage)
+	{
+		CurrentHP -= damage;
+		if(CurrentHP <= 0)
+		{
+			KillPlayer();
+		}
+	}
+
+	void KillPlayer()
+	{
+		Network.Destroy(gameObject);
 	}
 
 	void GetInputs()
@@ -55,5 +121,22 @@ public class ShipMovement : MonoBehaviour {
 		newR.z = 0;
 		Quaternion smoothedRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(newR), smoothRotation);
 		transform.rotation = smoothedRotation;
+	}
+
+	void Command()
+	{
+		if (Input.GetMouseButton(0) && canFire)
+		{
+			Shoot();
+		}
+	}
+
+	void Shoot()
+	{
+		GameObject nTiro = (GameObject) Network.Instantiate(tiro, tiroPos.position, Quaternion.identity, 0);
+		nTiro.GetComponent<Rigidbody>().velocity = transform.forward * SpeedBullet;
+		nTiro.layer = gameObject.layer;
+		canFire = false;
+		TimerBullet = 0;
 	}
 }
