@@ -15,7 +15,10 @@ public class BulletScript : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other)
 	{
-		SelfDestruct();
+		if (!other.gameObject.layer.Equals(gameObject.layer))
+		{
+			SelfDestruct();
+		}
 	}
 
 	void SelfDestruct()

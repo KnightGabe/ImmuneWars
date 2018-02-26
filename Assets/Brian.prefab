@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 114775869903124798}
   - component: {fileID: 114696654781968706}
   - component: {fileID: 114498570586597130}
+  - component: {fileID: 114884548567284936}
   m_Layer: 0
   m_Name: Brian
   m_TagString: Untagged
@@ -91,7 +92,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340439899769664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2268658, y: 1.78, z: 3.762035}
+  m_LocalPosition: {x: -27.779953, y: -0.41134167, z: 1.9601059}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4705209039842166}
@@ -349,6 +350,27 @@ MonoBehaviour:
   - {fileID: 114997966361017392}
   - {fileID: 81405229243839902}
   - {fileID: 20377282292357556}
+  - {fileID: 114884548567284936}
+--- !u!114 &114884548567284936
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340439899769664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de3525d21cb1cf4eaa6f710a88d0ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiro: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
+  tiroPos: {fileID: 4907399362162356}
+  player: {fileID: 0}
+  SpeedBullet: 50
+  TimerBullet: 0
+  RangeBullet: 5
+  CooldownBullet: 0.3
+  DamageBullet: 10
+  canFire: 0
 --- !u!114 &114997966361017392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,7 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiro: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
-  tiroPos: {fileID: 4907399362162356}
+  tiroPos: {fileID: 0}
   turnSpeed: 10
   forwardSpeed: 5
   sideSpeed: 2

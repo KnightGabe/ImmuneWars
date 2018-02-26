@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class ShipMovement : NetworkBehaviour {
+public class ShipMovement : MonoBehaviour {
 
 	[Header("Objetos e Componentes")]
 	public GameObject tiro;
 	public Transform tiroPos;
 	LayerMask self;
 
-	Rigidbody rb; 
+	Rigidbody rb;
 
 	[Header("Movimentacao")]
 	[SerializeField]
@@ -18,25 +17,25 @@ public class ShipMovement : NetworkBehaviour {
 
 	[SerializeField] [Range(0, 1)]
 	float smoothRotation;
-	
+
 	[Header("Inputs")]
 	private float rotateY, rotateX, thrust, sideWays, vertical;
 
-	[SerializeField][Header("Tiro")]
+	[SerializeField] [Header("Tiro")]
 	protected int DamageBullet;
 
-	[SerializeField][Header("Tiro")]
+	[SerializeField] [Header("Tiro")]
 	protected float RangeBullet;
 
-	[SerializeField][Header("Tiro")]
+	[SerializeField] [Header("Tiro")]
 	protected float SpeedBullet;
 
-	[SerializeField][Header("Tiro")]
+	[SerializeField] [Header("Tiro")]
 	protected float CooldownBullet;
 
-	protected float TimerBullet=0;
+	protected float TimerBullet = 0;
 
-	[SerializeField][Header("Misc")]
+	[SerializeField] [Header("Misc")]
 	protected float MaxHP;
 	[SerializeField]
 	[Header("Misc")]
@@ -48,13 +47,13 @@ public class ShipMovement : NetworkBehaviour {
 	public bool canInput = true;
 	public bool canFire;
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		rb = GetComponent<Rigidbody>();
 		CurrentHP = MaxHP;
 	}
-	
+
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate() {
 		Turn();
 		Move();
 	}
@@ -64,7 +63,7 @@ public class ShipMovement : NetworkBehaviour {
 		if (canInput)
 		{
 			GetInputs();
-			Commandos();
+			//Commandos();
 		}
 		TimerBullet += Time.deltaTime;
 		if (TimerBullet >= CooldownBullet)
@@ -75,7 +74,7 @@ public class ShipMovement : NetworkBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.layer == enemyLayer)
+		if (other.gameObject.layer == enemyLayer)
 		{
 			BulletScript enemyBullet = other.GetComponent<BulletScript>();
 			if (enemyBullet != null)
@@ -88,7 +87,7 @@ public class ShipMovement : NetworkBehaviour {
 	public void TakeDamage(int damage)
 	{
 		CurrentHP -= damage;
-		if(CurrentHP <= 0)
+		if (CurrentHP <= 0)
 		{
 			KillPlayer();
 		}
@@ -118,30 +117,30 @@ public class ShipMovement : NetworkBehaviour {
 	void Turn()
 	{
 		Vector3 newR = transform.rotation.eulerAngles;
-		newR.x += rotateX *turnSpeed;
-		newR.y += rotateY *turnSpeed;
+		newR.x += rotateX * turnSpeed;
+		newR.y += rotateY * turnSpeed;
 		newR.z = 0;
 		Quaternion smoothedRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(newR), smoothRotation);
 		transform.rotation = smoothedRotation;
 	}
 
-	void Commandos()
+	/*void Commandos()
 	{
-		if (Input.GetMouseButton(0) && canFire)
+		if (Input.GetMouseButton(0) && canFire || Input.GetKey(KeyCode.Space) && canFire)
 		{
 			CmdProjectileShoot();
 		}
-	}
-	[Command]
+	}*/
+	/*[Command]
 	void CmdProjectileShoot(){
-		GameObject nTiro = Instantiate (tiro,tiroPos.position,Quaternion.identity);
+		GameObject nTiro = (GameObject) Network.Instantiate (tiro,tiroPos.position,Quaternion.identity,0);
 		nTiro.GetComponent<Rigidbody>().velocity=transform.forward*SpeedBullet;
 		nTiro.layer=gameObject.layer;
 		canFire=false;
 		TimerBullet=0;
 	}
 
-	/*void HitscanShoot()
+	void HitscanShoot()
 	{
 		RaycastHit hit;
 		Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet, self);
