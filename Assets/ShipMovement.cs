@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ShipMovement : MonoBehaviour {
+public class ShipMovement : NetworkBehaviour {
 
 	[Header("Objetos e Componentes")]
 	public GameObject tiro;
 	public Transform tiroPos;
+	LayerMask self;
 
 	Rigidbody rb; 
 
@@ -62,7 +64,7 @@ public class ShipMovement : MonoBehaviour {
 		if (canInput)
 		{
 			GetInputs();
-			Command();
+			Commandos();
 		}
 		TimerBullet += Time.deltaTime;
 		if (TimerBullet >= CooldownBullet)
@@ -83,7 +85,7 @@ public class ShipMovement : MonoBehaviour {
 		}
 	}
 
-	void TakeDamage(int damage)
+	public void TakeDamage(int damage)
 	{
 		CurrentHP -= damage;
 		if(CurrentHP <= 0)
@@ -123,20 +125,30 @@ public class ShipMovement : MonoBehaviour {
 		transform.rotation = smoothedRotation;
 	}
 
-	void Command()
+	void Commandos()
 	{
 		if (Input.GetMouseButton(0) && canFire)
 		{
-			Shoot();
+			CmdProjectileShoot();
 		}
 	}
+	[Command]
+	void CmdProjectileShoot(){
+		GameObject nTiro = Instantiate (tiro,tiroPos.position,Quaternion.identity);
+		nTiro.GetComponent<Rigidbody>().velocity=transform.forward*SpeedBullet;
+		nTiro.layer=gameObject.layer;
+		canFire=false;
+		TimerBullet=0;
+	}
 
-	void Shoot()
+	/*void HitscanShoot()
 	{
-		GameObject nTiro = (GameObject) Network.Instantiate(tiro, tiroPos.position, Quaternion.identity, 0);
-		nTiro.GetComponent<Rigidbody>().velocity = transform.forward * SpeedBullet;
-		nTiro.layer = gameObject.layer;
+		RaycastHit hit;
+		Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet, self);
+		if(hit.collider.gameObject.layer==enemyLayer){
+			hit.collider.gameObject.GetComponent<ShipMovement>().TakeDamage(DamageBullet);
+		}
 		canFire = false;
 		TimerBullet = 0;
-	}
+	}*/
 }
