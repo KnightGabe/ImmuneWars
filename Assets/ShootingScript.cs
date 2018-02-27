@@ -27,7 +27,7 @@ public class ShootingScript : NetworkBehaviour {
 
 	private void Update()
 	{
-		if (Input.GetMouseButton(0) && canFire || Input.GetKey(KeyCode.Space) && canFire)
+		if (Input.GetMouseButton(0) && canFire)
 		{
 			CmdProjectileShoot();
 		}

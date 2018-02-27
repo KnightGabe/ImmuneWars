@@ -124,7 +124,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340439899769664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.863534, y: -1.37, z: 5.7117863}
+  m_LocalPosition: {x: -9.72, y: 1.64, z: -15.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4705209039842166}
@@ -139,8 +139,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1756535643755988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.45, y: 0.19, z: -0.505}
-  m_LocalScale: {x: 1.0000036, y: 0.99999815, z: 1.0000002}
+  m_LocalPosition: {x: -0.317, y: -0.131, z: -0.405}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4705209039842166}
   m_RootOrder: 1
@@ -167,8 +167,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1253253333379582}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.45, y: 0.4780226, z: -0.505}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.266, y: -0.027, z: -0.418}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4705209039842166}
@@ -193,13 +193,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730788448283534}
-  m_LocalRotation: {x: 0.14237794, y: -0, z: -0, w: 0.9898124}
-  m_LocalPosition: {x: 0, y: 2.255, z: -3.969}
+  m_LocalRotation: {x: 0.20913443, y: -0, z: -0, w: 0.977887}
+  m_LocalPosition: {x: 0, y: 1.88, z: -3.9690008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4061360615959046}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 16.371, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 24.143002, y: 0, z: 0}
 --- !u!20 &20377282292357556
 Camera:
   m_ObjectHideFlags: 1
@@ -354,18 +354,6 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.48386955
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.49676156
-        value: 0.79570246
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
         value: 1
         inSlope: 0
         outSlope: 0
@@ -407,7 +395,7 @@ TrailRenderer:
     alignment: 0
     textureMode: 0
     generateLightingData: 1
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.8
   m_Autodestruct: 1
 --- !u!96 &96655594989464930
 TrailRenderer:
@@ -453,18 +441,6 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.48386955
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.49676156
-        value: 0.79570246
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
         value: 1
         inSlope: 0
         outSlope: 0
@@ -506,7 +482,7 @@ TrailRenderer:
     alignment: 0
     textureMode: 0
     generateLightingData: 1
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.8
   m_Autodestruct: 1
 --- !u!114 &114218346912489458
 MonoBehaviour:
@@ -521,6 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4705209039842166}
   smoothFollow: 0.125
+  offset: {x: 0, y: 1, z: -4}
 --- !u!114 &114498570586597130
 MonoBehaviour:
   m_ObjectHideFlags: 1
