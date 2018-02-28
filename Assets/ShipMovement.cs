@@ -47,6 +47,7 @@ public class ShipMovement : NetworkBehaviour {
 	protected float CurrentHP;
 	public bool canInput = true;
 	public bool canFire;
+	private const string PlayerTag = "Player";
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
@@ -71,26 +72,14 @@ public class ShipMovement : NetworkBehaviour {
 		{
 			canFire = true;
 		}
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if(other.gameObject.layer == enemyLayer)
-		{
-			BulletScript enemyBullet = other.GetComponent<BulletScript>();
-			if (enemyBullet != null)
-			{
-				TakeDamage(enemyBullet.damage);
-			}
-		}
-	}
+	}		
 
 	public void TakeDamage(int damage)
 	{
 		CurrentHP -= damage;
 		if(CurrentHP <= 0)
 		{
-			KillPlayer();
+			//KillPlayer();
 		}
 	}
 
@@ -129,26 +118,36 @@ public class ShipMovement : NetworkBehaviour {
 	{
 		if (Input.GetMouseButton(0) && canFire)
 		{
-			CmdProjectileShoot();
+			HitscanShoot ();
 		}
 	}
-	[Command]
+	/*[Command]
 	void CmdProjectileShoot(){
 		GameObject nTiro = Instantiate (tiro,tiroPos.position,Quaternion.identity);
 		nTiro.GetComponent<Rigidbody>().velocity=transform.forward*SpeedBullet;
 		nTiro.layer=gameObject.layer;
 		canFire=false;
 		TimerBullet=0;
-	}
-
-	/*void HitscanShoot()
-	{
-		RaycastHit hit;
-		Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet, self);
-		if(hit.collider.gameObject.layer==enemyLayer){
-			hit.collider.gameObject.GetComponent<ShipMovement>().TakeDamage(DamageBullet);
-		}
-		canFire = false;
-		TimerBullet = 0;
 	}*/
+
+	[Client]
+	void HitscanShoot(){
+		RaycastHit hit;
+		if (Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet,self)){
+			if (hit.collider.tag == PlayerTag) {
+				CmdEnemyPlayerHit (hit.collider.name);
+			}
+			//ShipMovement target = hit.transform.GetComponent<ShipMovement> ();
+			//if (target != null) {
+				//target.TakeDamage (DamageBullet);
+			//}
+			canFire = false;
+			TimerBullet = 0;
+		}
+	}
+	[Command]
+	void CmdEnemyPlayerHit(string target){
+		ShipMovement player = GameManager.GetPlayer (target);
+		player.TakeDamage (DamageBullet);
+	}
 }
