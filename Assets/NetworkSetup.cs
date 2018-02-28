@@ -7,6 +7,9 @@ public class NetworkSetup :  NetworkBehaviour {
 
 	[SerializeField]
 	Behaviour[] disableObjects;
+
+	[SerializeField]
+	string RemotePlayerLayer = "PlayerRemoto";
 	
 	Camera lobbyCamera;
 
@@ -15,14 +18,11 @@ public class NetworkSetup :  NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		player = GetComponentInChildren<ShipMovement>();
+		player = GetComponent<ShipMovement>();
 		if (!isLocalPlayer)
 		{
-			player.gameObject.layer = LayerMask.NameToLayer("PlayerRemoto");
-			for (int i = 0; i < disableObjects.Length; i++)
-			{
-				disableObjects[i].enabled = false;
-			}
+			DisableComponents ();
+			SetRemotePlayer ();
 		}
 		else
 		{
@@ -36,6 +36,12 @@ public class NetworkSetup :  NetworkBehaviour {
 		}
 	}
 
+	public override void OnStartClient(){
+		base.OnStartClient ();
+		string NetID = GetComponent<NetworkIdentity> ().netId.ToString();
+		ShipMovement Player = GetComponent<ShipMovement> ();
+		GameManager.RegisterPlayer (NetID, Player);
+	}
 	private void Update()
 	{
 		//Cursor.lockState = currentMode;
@@ -48,5 +54,16 @@ public class NetworkSetup :  NetworkBehaviour {
 			lobbyCamera.gameObject.SetActive(true);
 			//currentMode = CursorLockMode.None;
 		}
+		GameManager.RemovePlayer (transform.name);
+	}
+	void DisableComponents(){
+		player.gameObject.layer = LayerMask.NameToLayer("PlayerRemoto");
+		for (int i = 0; i < disableObjects.Length; i++)
+		{
+			disableObjects[i].enabled = false;
+		}
+	}
+	void SetRemotePlayer (){
+		gameObject.layer = LayerMask.NameToLayer (RemotePlayerLayer);
 	}
 }
