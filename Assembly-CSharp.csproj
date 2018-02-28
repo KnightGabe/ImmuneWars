@@ -53,7 +53,6 @@
   <ItemGroup>
      <Compile Include="Assets\BulletScript.cs" />
      <Compile Include="Assets\CameraFollow.cs" />
-     <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\NetworkSetup.cs" />
      <Compile Include="Assets\ShipMovement.cs" />
  <Reference Include="UnityEngine.UI">
