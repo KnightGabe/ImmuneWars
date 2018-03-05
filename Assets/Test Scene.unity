@@ -1011,6 +1011,7 @@ Transform:
   - {fileID: 512851602}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1288208459
 GameObject:
@@ -1073,6 +1074,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+=======
+>>>>>>> parent of dd821e4... Trail stuff + Camera
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1337937866
 GameObject:
