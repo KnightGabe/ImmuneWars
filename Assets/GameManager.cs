@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	private static Dictionary<string, ShipMovement> players = new Dictionary<string, ShipMovement>();
+	private static Dictionary<string, ShipManager> players = new Dictionary<string, ShipManager>();
 	// Use this for initialization
 	void Start () {
 		
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
-	public static void RegisterPlayer(string NetID, ShipMovement player){
+	public static void RegisterPlayer(string NetID, ShipManager player){
 		string PlayerID = "Player " + NetID;
 		players.Add (PlayerID, player);
 		player.transform.name = PlayerID;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 	public static void RemovePlayer(string PlayerID){
 		players.Remove (PlayerID);
 	}
-	public static ShipMovement GetPlayer(string PlayerID){
+	public static ShipManager GetPlayer(string PlayerID){
 		return players [PlayerID];
 	}
 }

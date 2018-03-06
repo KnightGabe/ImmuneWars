@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[RequireComponent(typeof(ShipManager))]
 public class NetworkSetup :  NetworkBehaviour {
 
 	[SerializeField]
@@ -13,12 +14,12 @@ public class NetworkSetup :  NetworkBehaviour {
 	
 	Camera lobbyCamera;
 
-	ShipMovement player;
+	ShipManager player;
 	//CursorLockMode currentMode;
 
 	// Use this for initialization
 	void Start () {
-		player = GetComponent<ShipMovement>();
+		player = GetComponent<ShipManager>();
 		if (!isLocalPlayer)
 		{
 			DisableComponents ();
@@ -39,7 +40,7 @@ public class NetworkSetup :  NetworkBehaviour {
 	public override void OnStartClient(){
 		base.OnStartClient ();
 		string NetID = GetComponent<NetworkIdentity> ().netId.ToString();
-		ShipMovement Player = GetComponent<ShipMovement> ();
+		ShipManager Player = GetComponent<ShipManager> ();
 		GameManager.RegisterPlayer (NetID, Player);
 	}
 	private void Update()

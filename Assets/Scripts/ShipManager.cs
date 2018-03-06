@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ShipMovement : NetworkBehaviour {
+public class ShipManager : NetworkBehaviour {
 
 	[Header("Objetos e Componentes")]
 	public GameObject tiro;
-	public Transform tiroPos;
-	LayerMask self;
+	//public Transform tiroPos;
 
 	Rigidbody rb; 
 
@@ -17,7 +16,7 @@ public class ShipMovement : NetworkBehaviour {
 	protected float turnSpeed, forwardSpeed, sideSpeed, verticalSpeed, baseSpeed;
 
 	[SerializeField] [Range(0, 1)]
-	float smoothRotation;
+	float smoothRotation=0.125f;
 	
 	[Header("Inputs")]
 	private float rotateY, rotateX, thrust, sideWays, vertical;
@@ -37,7 +36,7 @@ public class ShipMovement : NetworkBehaviour {
 	protected float TimerBullet=0;
 
 	[SerializeField][Header("Misc")]
-	protected float MaxHP;
+	protected int MaxHP;
 	[SerializeField]
 	[Header("Misc")]
 	protected LayerMask enemyLayer;
@@ -49,9 +48,8 @@ public class ShipMovement : NetworkBehaviour {
 	public bool canFire;
 	private const string PlayerTag = "Player";
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		rb = GetComponent<Rigidbody>();
-		CurrentHP = MaxHP;
 	}
 	
 	// Update is called once per frame
@@ -60,18 +58,14 @@ public class ShipMovement : NetworkBehaviour {
 		Move();
 	}
 
-	private void Update()
+	protected virtual void Update()
 	{
 		if (canInput)
 		{
 			GetInputs();
-			Commandos();
+			Comandos();
 		}
-		TimerBullet += Time.deltaTime;
-		if (TimerBullet >= CooldownBullet)
-		{
-			canFire = true;
-		}
+		CooldownTimer ();
 	}		
 
 	public void TakeDamage(int damage)
@@ -114,7 +108,7 @@ public class ShipMovement : NetworkBehaviour {
 		transform.rotation = smoothedRotation;
 	}
 
-	void Commandos()
+	protected virtual void Comandos()
 	{
 		if (Input.GetMouseButton(0) && canFire)
 		{
@@ -133,21 +127,24 @@ public class ShipMovement : NetworkBehaviour {
 	[Client]
 	void HitscanShoot(){
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet,self)){
+		if (Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet,enemyLayer)){
 			if (hit.collider.tag == PlayerTag) {
-				CmdEnemyPlayerHit (hit.collider.name);
+				CmdEnemyPlayerHit (hit.collider.name,DamageBullet);
 			}
-			//ShipMovement target = hit.transform.GetComponent<ShipMovement> ();
-			//if (target != null) {
-				//target.TakeDamage (DamageBullet);
-			//}
 			canFire = false;
 			TimerBullet = 0;
 		}
 	}
 	[Command]
-	void CmdEnemyPlayerHit(string target){
-		ShipMovement player = GameManager.GetPlayer (target);
-		player.TakeDamage (DamageBullet);
+	public void CmdEnemyPlayerHit(string target, int damage){
+		ShipManager player = GameManager.GetPlayer (target);
+		player.TakeDamage (damage);
+	}
+	protected virtual void CooldownTimer(){
+		TimerBullet += Time.deltaTime;
+		if (TimerBullet >= CooldownBullet)
+		{
+			canFire = true;
+		}
 	}
 }
