@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class DummyShip : ShipManager {
 
 	// Use this for initialization
-	private float CooldownSkillA = 10f;
+	private float CooldownSkillA = 2f;
 	private float TimerSkillA=0f;
 	private bool OnCDSkillA;
 	private float RangeSkillA=100f;
@@ -24,8 +24,11 @@ public class DummyShip : ShipManager {
 		baseSpeed=0f;
 		DamageBullet = 10;
 		RangeBullet = 100f;
-		SpeedBullet = 100f;
+		SpeedBullet = 5f;
 		CooldownBullet = 0.02f;
+	}
+	protected override void Update(){
+		base.Update ();
 	}
 	protected override void Comandos ()
 	{
@@ -39,8 +42,11 @@ public class DummyShip : ShipManager {
 		GameObject nTiro = Instantiate (tiro,transform.position,Quaternion.identity);
 		nTiro.GetComponent<Rigidbody>().velocity=transform.forward*SpeedBullet;
 		nTiro.GetComponent<SkillAScript> ().Reference = this.gameObject;
+		//nTiro.GetComponent<SkillAScript> ().AddSpeed (SpeedBullet);
 		NetworkServer.Spawn (nTiro);
+
 		OnCDSkillA = true;
+		TimerSkillA = 0f;
 	}
 	protected override void CooldownTimer(){
 		base.CooldownTimer ();

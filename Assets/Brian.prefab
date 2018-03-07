@@ -40,7 +40,6 @@ GameObject:
   - component: {fileID: 114775869903124798}
   - component: {fileID: 114696654781968706}
   - component: {fileID: 114498570586597130}
-  - component: {fileID: 114972201044161960}
   - component: {fileID: 33640490134196740}
   - component: {fileID: 23818133282594258}
   - component: {fileID: 114307808711724328}
@@ -287,7 +286,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiro: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
-  tiroPos: {fileID: 0}
   turnSpeed: 0
   forwardSpeed: 0
   sideSpeed: 0
@@ -301,10 +299,10 @@ MonoBehaviour:
   MaxHP: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   myLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   canInput: 1
   canFire: 0
   DamageSkillA: 50
@@ -392,42 +390,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableObjects:
-  - {fileID: 114407374997052166}
-  - {fileID: 81405229243839902}
   - {fileID: 20377282292357556}
+  - {fileID: 81405229243839902}
   RemotePlayerLayer: PlayerRemoto
---- !u!114 &114972201044161960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1340439899769664}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 450c8ff2c17c8b24f93fcd429bb21a3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tiro: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
-  tiroPos: {fileID: 4907399362162356}
-  turnSpeed: 10
-  forwardSpeed: 5
-  sideSpeed: 2
-  verticalSpeed: 3
-  baseSpeed: 0
-  smoothRotation: 0.125
-  DamageBullet: 10
-  RangeBullet: 100
-  SpeedBullet: 100
-  CooldownBullet: 0.02
-  MaxHP: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  myLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  canInput: 1
-  canFire: 0
 --- !u!124 &124304295497708018
 Behaviour:
   m_ObjectHideFlags: 1

@@ -13,24 +13,25 @@ public class ShipManager : NetworkBehaviour {
 
 	[Header("Movimentacao")]
 	[SerializeField]
-	protected float turnSpeed, forwardSpeed, sideSpeed, verticalSpeed, baseSpeed;
+	protected float turnSpeed;
+	[SerializeField]
+	protected float forwardSpeed, sideSpeed, verticalSpeed, baseSpeed;
 
 	[SerializeField] [Range(0, 1)]
 	float smoothRotation=0.125f;
-	
-	[Header("Inputs")]
+
 	private float rotateY, rotateX, thrust, sideWays, vertical;
 
 	[SerializeField][Header("Tiro")]
 	protected int DamageBullet;
 
-	[SerializeField][Header("Tiro")]
+	[SerializeField]
 	protected float RangeBullet;
 
-	[SerializeField][Header("Tiro")]
+	[SerializeField]
 	protected float SpeedBullet;
 
-	[SerializeField][Header("Tiro")]
+	[SerializeField]
 	protected float CooldownBullet;
 
 	protected float TimerBullet=0;
@@ -41,11 +42,10 @@ public class ShipManager : NetworkBehaviour {
 	[Header("Misc")]
 	protected LayerMask enemyLayer;
 	[SerializeField]
-	[Header("Misc")]
 	protected LayerMask myLayer;
 	protected float CurrentHP;
 	public bool canInput = true;
-	public bool canFire;
+	public bool canFire = true;
 	private const string PlayerTag = "Player";
 	// Use this for initialization
 	protected virtual void Start () {
@@ -54,26 +54,34 @@ public class ShipManager : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		Turn();
-		Move();
+		if (!isLocalPlayer) {
+			return;
+		} else {
+			Turn ();
+			Move ();
+		}
 	}
 
 	protected virtual void Update()
 	{
-		if (canInput)
-		{
-			GetInputs();
-			Comandos();
+		if (!isLocalPlayer) {
+			return;
+		} else {
+			if (canInput) {
+				GetInputs ();
+				Comandos ();
+			}
+			CooldownTimer ();
 		}
-		CooldownTimer ();
 	}		
 
 	public void TakeDamage(int damage)
 	{
 		CurrentHP -= damage;
+		Debug.Log ("PEW");
 		if(CurrentHP <= 0)
 		{
-			//KillPlayer();
+			KillPlayer();
 		}
 	}
 
@@ -128,12 +136,15 @@ public class ShipManager : NetworkBehaviour {
 	void HitscanShoot(){
 		RaycastHit hit;
 		if (Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet,enemyLayer)){
+			Debug.Log (hit.collider.name);
 			if (hit.collider.tag == PlayerTag) {
+				Debug.Log ("Entrou 1");
 				CmdEnemyPlayerHit (hit.collider.name,DamageBullet);
+				Debug.Log ("Entrou 2");
 			}
-			canFire = false;
-			TimerBullet = 0;
 		}
+		canFire = false;
+		TimerBullet = 0;
 	}
 	[Command]
 	public void CmdEnemyPlayerHit(string target, int damage){
