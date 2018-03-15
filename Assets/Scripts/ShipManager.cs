@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class ShipManager : NetworkBehaviour {
 
@@ -10,6 +11,11 @@ public class ShipManager : NetworkBehaviour {
 	//public Transform tiroPos;
 
 	Rigidbody rb; 
+
+	[Header("UI")]
+	protected Slider HealthBar;
+	[SerializeField]
+	protected Canvas brianCanvas;
 
 	[Header("Movimentacao")]
 	[SerializeField]
@@ -24,6 +30,7 @@ public class ShipManager : NetworkBehaviour {
 
 	[SerializeField][Header("Tiro")]
 	protected int DamageBullet;
+
 
 	[SerializeField]
 	protected float RangeBullet;
@@ -43,13 +50,27 @@ public class ShipManager : NetworkBehaviour {
 	protected LayerMask enemyLayer;
 	[SerializeField]
 	protected LayerMask myLayer;
+	[SyncVar]
 	protected float CurrentHP;
 	public bool canInput = true;
 	public bool canFire = true;
 	private const string PlayerTag = "Player";
+
+	private MeshRenderer myRenderer;
+
 	// Use this for initialization
 	protected virtual void Start () {
 		rb = GetComponent<Rigidbody>();
+		InstantiateCanvas();
+		myRenderer = GetComponent<MeshRenderer>();
+		if (isLocalPlayer)
+		{
+			myRenderer.material.color = Color.blue;
+		}
+		else
+		{
+			myRenderer.material.color = Color.red;
+		}
 	}
 	
 	// Update is called once per frame
@@ -57,11 +78,18 @@ public class ShipManager : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		} else {
+			SetHealth();
 			Turn ();
 			Move ();
 		}
 	}
-
+	
+	private void InstantiateCanvas()
+	{
+		Instantiate(brianCanvas);
+		HealthBar = brianCanvas.GetComponentInChildren<Slider>();
+		Debug.Log(HealthBar);
+	}
 	protected virtual void Update()
 	{
 		if (!isLocalPlayer) {
@@ -75,19 +103,29 @@ public class ShipManager : NetworkBehaviour {
 		}
 	}		
 
+	private void SetHealth()
+	{
+		HealthBar.maxValue = MaxHP;
+		HealthBar.value = CurrentHP;
+	}
+
 	public void TakeDamage(int damage)
 	{
+		if (isServer)
+		{
+			return;
+		}
 		CurrentHP -= damage;
-		Debug.Log ("PEW");
 		if(CurrentHP <= 0)
 		{
+			CurrentHP = 0;
 			KillPlayer();
 		}
 	}
 
 	void KillPlayer()
 	{
-		Network.Destroy(gameObject);
+		Debug.Log("Dead");
 	}
 
 	void GetInputs()

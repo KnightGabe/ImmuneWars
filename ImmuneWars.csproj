@@ -219,10 +219,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BulletScript.cs" />
-    <Compile Include="Assets\CameraFollow.cs" />
-    <Compile Include="Assets\NetworkSetup.cs" />
-    <Compile Include="Assets\ShipMovement.cs" />
+    <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\Scripts\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\DummyShip.cs" />
+    <Compile Include="Assets\Scripts\NetworkSetup.cs" />
+    <Compile Include="Assets\Scripts\ShipManager.cs" />
+    <Compile Include="Assets\Scripts\SkillAScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -13,19 +13,9 @@ public class DummyShip : ShipManager {
 	public int DamageSkillA=50;
 
 	protected override void Start () {
-		
-		base.Start ();
-		MaxHP = 100;
+
 		CurrentHP = MaxHP;
-		turnSpeed = 10f;
-		forwardSpeed = 5f;
-		sideSpeed = 2f;
-		verticalSpeed = 3f;
-		baseSpeed=0f;
-		DamageBullet = 10;
-		RangeBullet = 100f;
-		SpeedBullet = 5f;
-		CooldownBullet = 0.02f;
+		base.Start ();
 	}
 	protected override void Update(){
 		base.Update ();

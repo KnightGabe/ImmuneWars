@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 114498570586597130}
   - component: {fileID: 33640490134196740}
   - component: {fileID: 23818133282594258}
-  - component: {fileID: 114307808711724328}
   - component: {fileID: 114407374997052166}
   m_Layer: 8
   m_Name: Brian
@@ -92,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340439899769664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -25.238457, y: 42.099, z: -87.17834}
   m_LocalScale: {x: 0.8485869, y: 0.39747074, z: 1.6592895}
   m_Children:
   - {fileID: 4705209039842166}
@@ -263,17 +262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4705209039842166}
   smoothFollow: 0.125
---- !u!114 &114307808711724328
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1340439899769664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1108a43559e42e84b8d181e6719dbb24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114407374997052166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,17 +274,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiro: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
-  turnSpeed: 0
-  forwardSpeed: 0
-  sideSpeed: 0
-  verticalSpeed: 0
-  baseSpeed: 0
+  brianCanvas: {fileID: 223489701091724216, guid: 0e9844e1bddff854faeff795a28179c4,
+    type: 2}
+  turnSpeed: 5
+  forwardSpeed: 5
+  sideSpeed: 5
+  verticalSpeed: 5
+  baseSpeed: 1
   smoothRotation: 0.125
-  DamageBullet: 0
-  RangeBullet: 0
-  SpeedBullet: 0
-  CooldownBullet: 0
-  MaxHP: 0
+  DamageBullet: 5
+  RangeBullet: 100
+  SpeedBullet: 30
+  CooldownBullet: 0.3
+  MaxHP: 100
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
