@@ -224,6 +224,7 @@
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\DummyShip.cs" />
     <Compile Include="Assets\Scripts\NetworkSetup.cs" />
+    <Compile Include="Assets\Scripts\RayView.cs" />
     <Compile Include="Assets\Scripts\ShipManager.cs" />
     <Compile Include="Assets\Scripts\SkillAScript.cs" />
   </ItemGroup>

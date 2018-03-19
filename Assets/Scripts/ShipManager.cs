@@ -50,22 +50,29 @@ public class ShipManager : NetworkBehaviour {
 	protected LayerMask enemyLayer;
 	[SerializeField]
 	protected LayerMask myLayer;
-	[SyncVar]
-	protected float CurrentHP;
+	[SyncVar(hook = "ChangeHealth")]
+	public int CurrentHP;
 	public bool canInput = true;
 	public bool canFire = true;
 	private const string PlayerTag = "Player";
 
 	private MeshRenderer myRenderer;
 
+	RayView laser;
+	
+
 	// Use this for initialization
 	protected virtual void Start () {
 		rb = GetComponent<Rigidbody>();
-		InstantiateCanvas();
 		myRenderer = GetComponent<MeshRenderer>();
+		laser = GetComponentInChildren<RayView>();
 		if (isLocalPlayer)
 		{
 			myRenderer.material.color = Color.blue;
+			InstantiateCanvas();
+
+			HealthBar.maxValue = MaxHP;
+			HealthBar.value = MaxHP;
 		}
 		else
 		{
@@ -78,16 +85,26 @@ public class ShipManager : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		} else {
-			SetHealth();
-			Turn ();
-			Move ();
+			if (canInput)
+			{
+				Turn();
+				Move();
+			}
 		}
 	}
-	
+
+	void ChangeHealth(int health)
+	{
+		if (HealthBar!= null)
+		{
+			HealthBar.value = health;
+		}
+	}
+
 	private void InstantiateCanvas()
 	{
-		Instantiate(brianCanvas);
-		HealthBar = brianCanvas.GetComponentInChildren<Slider>();
+		Canvas newCanvas = Instantiate(brianCanvas);
+		HealthBar = newCanvas.GetComponentInChildren<Slider>();
 		Debug.Log(HealthBar);
 	}
 	protected virtual void Update()
@@ -101,31 +118,24 @@ public class ShipManager : NetworkBehaviour {
 			}
 			CooldownTimer ();
 		}
-	}		
-
-	private void SetHealth()
-	{
-		HealthBar.maxValue = MaxHP;
-		HealthBar.value = CurrentHP;
 	}
-
 	public void TakeDamage(int damage)
 	{
 		if (isServer)
 		{
-			return;
-		}
-		CurrentHP -= damage;
-		if(CurrentHP <= 0)
-		{
-			CurrentHP = 0;
-			KillPlayer();
+			CurrentHP -= damage;
+			if (CurrentHP <= 0)
+			{
+				CurrentHP = 0;
+				KillPlayer();
+			}
 		}
 	}
 
 	void KillPlayer()
 	{
-		Debug.Log("Dead");
+		canInput = false;
+		Debug.Log(gameObject.name + "Dead");
 	}
 
 	void GetInputs()
@@ -173,11 +183,14 @@ public class ShipManager : NetworkBehaviour {
 	[Client]
 	void HitscanShoot(){
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, transform.forward, out hit, RangeBullet,enemyLayer)){
+		Debug.DrawRay(transform.position, Camera.main.transform.forward);
+		//StartCoroutine(laser.DrawLine(Camera.main.transform.forward * RangeBullet));
+		if (Physics.Raycast (transform.position, Camera.main.transform.forward, out hit, RangeBullet,enemyLayer)){
 			Debug.Log (hit.collider.name);
-			if (hit.collider.tag == PlayerTag) {
+			if (hit.collider != null) {
 				Debug.Log ("Entrou 1");
 				CmdEnemyPlayerHit (hit.collider.name,DamageBullet);
+				//hit.collider.GetComponent<DummyShip>().TakeDamage(DamageBullet);
 				Debug.Log ("Entrou 2");
 			}
 		}
@@ -188,6 +201,18 @@ public class ShipManager : NetworkBehaviour {
 	public void CmdEnemyPlayerHit(string target, int damage){
 		ShipManager player = GameManager.GetPlayer (target);
 		player.TakeDamage (damage);
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.layer == enemyLayer)
+		{
+			BulletScript enemyBullet = other.GetComponent<BulletScript>();
+			if (enemyBullet != null)
+			{
+				TakeDamage(enemyBullet.damage);
+			}
+		}
 	}
 	protected virtual void CooldownTimer(){
 		TimerBullet += Time.deltaTime;
