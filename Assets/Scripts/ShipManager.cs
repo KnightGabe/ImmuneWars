@@ -64,7 +64,7 @@ public class ShipManager : NetworkBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
 		rb = GetComponent<Rigidbody>();
-		myRenderer = GetComponent<MeshRenderer>();
+		myRenderer = GetComponentInChildren<MeshRenderer>();
 		laser = GetComponentInChildren<RayView>();
 		if (isLocalPlayer)
 		{
