@@ -8,6 +8,7 @@ public class ShipManager : NetworkBehaviour {
 
 	[Header("Objetos e Componentes")]
 	public GameObject tiro;
+	BoxCollider bxcol;
 	//public Transform tiroPos;
 
 	Rigidbody rb; 
@@ -54,7 +55,14 @@ public class ShipManager : NetworkBehaviour {
 	public int CurrentHP;
 	public bool canInput = true;
 	public bool canFire = true;
+	[SyncVar]
+	private bool IsDead=false;
+	public bool isRlyDead{
+		get{ return IsDead; }
+		protected set{ IsDead = value; }
+	}
 	private const string PlayerTag = "Player";
+	private Transform Origin;
 
 	private MeshRenderer myRenderer;
 
@@ -63,9 +71,11 @@ public class ShipManager : NetworkBehaviour {
 
 	// Use this for initialization
 	protected virtual void Start () {
+		bxcol = GetComponent<BoxCollider>();
 		rb = GetComponent<Rigidbody>();
 		myRenderer = GetComponentInChildren<MeshRenderer>();
 		laser = GetComponentInChildren<RayView>();
+		Origin = transform.position;
 		if (isLocalPlayer)
 		{
 			myRenderer.material.color = Color.blue;
@@ -119,7 +129,8 @@ public class ShipManager : NetworkBehaviour {
 			CooldownTimer ();
 		}
 	}
-	public void TakeDamage(int damage)
+	[ClientRpc]
+	public void RpcTakeDamage(int damage)
 	{
 		if (isServer)
 		{
@@ -132,10 +143,23 @@ public class ShipManager : NetworkBehaviour {
 		}
 	}
 
-	void KillPlayer()
+	private void KillPlayer()
 	{
+		IsDead = true;
 		canInput = false;
+		bxcol.enabled = false;
 		Debug.Log(gameObject.name + "Dead");
+		StartCoroutine (Respawn ());
+	}
+
+	IEnumerator Respawn(){
+		yield return new WaitForSeconds (5f);
+
+		transform.position = Origin;
+		IsDead = false;
+		canInput = true;
+		bxcol.enabled = true;
+
 	}
 
 	void GetInputs()
@@ -171,14 +195,6 @@ public class ShipManager : NetworkBehaviour {
 			HitscanShoot ();
 		}
 	}
-	/*[Command]
-	void CmdProjectileShoot(){
-		GameObject nTiro = Instantiate (tiro,tiroPos.position,Quaternion.identity);
-		nTiro.GetComponent<Rigidbody>().velocity=transform.forward*SpeedBullet;
-		nTiro.layer=gameObject.layer;
-		canFire=false;
-		TimerBullet=0;
-	}*/
 
 	[Client]
 	void HitscanShoot(){
@@ -200,7 +216,7 @@ public class ShipManager : NetworkBehaviour {
 	[Command]
 	public void CmdEnemyPlayerHit(string target, int damage){
 		ShipManager player = GameManager.GetPlayer (target);
-		player.TakeDamage (damage);
+		player.RpcTakeDamage (damage);
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -210,7 +226,7 @@ public class ShipManager : NetworkBehaviour {
 			BulletScript enemyBullet = other.GetComponent<BulletScript>();
 			if (enemyBullet != null)
 			{
-				TakeDamage(enemyBullet.damage);
+				RpcTakeDamage(enemyBullet.damage);
 			}
 		}
 	}
