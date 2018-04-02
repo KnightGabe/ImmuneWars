@@ -62,7 +62,7 @@ public class ShipManager : NetworkBehaviour {
 		protected set{ IsDead = value; }
 	}
 	private const string PlayerTag = "Player";
-	private Transform Origin;
+	private Vector3 Origin;
 
 	private MeshRenderer myRenderer;
 

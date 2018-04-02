@@ -348,11 +348,11 @@ MonoBehaviour:
   tiro: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
   brianCanvas: {fileID: 223489701091724216, guid: 0e9844e1bddff854faeff795a28179c4,
     type: 2}
-  turnSpeed: 5
-  forwardSpeed: 5
-  sideSpeed: 5
-  verticalSpeed: 5
-  baseSpeed: 1
+  turnSpeed: 15
+  forwardSpeed: 15
+  sideSpeed: 15
+  verticalSpeed: 15
+  baseSpeed: 5
   smoothRotation: 0.125
   DamageBullet: 5
   RangeBullet: 100
