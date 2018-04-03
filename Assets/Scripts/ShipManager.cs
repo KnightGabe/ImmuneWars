@@ -62,7 +62,7 @@ public class ShipManager : NetworkBehaviour {
 		protected set{ IsDead = value; }
 	}
 	private const string PlayerTag = "Player";
-	private Transform Origin;
+	private Vector3 Origin;
 
 	private MeshRenderer myRenderer;
 
@@ -71,10 +71,8 @@ public class ShipManager : NetworkBehaviour {
 
 	// Use this for initialization
 	protected virtual void Start () {
-		bxcol = GetComponent<BoxCollider>();
-		rb = GetComponent<Rigidbody>();
-		myRenderer = GetComponentInChildren<MeshRenderer>();
-		laser = GetComponentInChildren<RayView>();
+
+		GrabComponents ();
 		Origin = transform.position;
 		if (isLocalPlayer)
 		{
@@ -236,5 +234,11 @@ public class ShipManager : NetworkBehaviour {
 		{
 			canFire = true;
 		}
+	}
+	protected void GrabComponents(){
+		bxcol = GetComponent<BoxCollider>();
+		rb = GetComponent<Rigidbody>();
+		myRenderer = GetComponentInChildren<MeshRenderer>();
+		laser = GetComponentInChildren<RayView>();
 	}
 }

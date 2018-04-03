@@ -14,7 +14,7 @@ public class DummyShip : ShipManager {
 
 	protected override void Start () {
 
-		CurrentHP = MaxHP;
+		MontarPadrao ();
 		base.Start ();
 	}
 	protected override void Update(){
@@ -44,5 +44,17 @@ public class DummyShip : ShipManager {
 		if (TimerSkillA >= CooldownSkillA){
 			OnCDSkillA = false;
 		}
+	}
+	protected void MontarPadrao(){
+		turnSpeed = 5f;
+		forwardSpeed = 5f;
+		sideSpeed = 5f;
+		verticalSpeed = 5f;
+		baseSpeed = 5f;
+		DamageBullet = 5;
+		RangeBullet = 100f;
+		SpeedBullet = 30f;
+		CooldownBullet = 0.3f;
+		CurrentHP = MaxHP;
 	}
 }
