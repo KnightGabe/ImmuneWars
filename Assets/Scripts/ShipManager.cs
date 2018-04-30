@@ -71,8 +71,10 @@ public class ShipManager : NetworkBehaviour {
 
 	// Use this for initialization
 	protected virtual void Start () {
-
-		GrabComponents ();
+		bxcol = GetComponent<BoxCollider>();
+		rb = GetComponent<Rigidbody>();
+		myRenderer = GetComponentInChildren<MeshRenderer>();
+		laser = GetComponentInChildren<RayView>();
 		Origin = transform.position;
 		if (isLocalPlayer)
 		{
@@ -89,16 +91,14 @@ public class ShipManager : NetworkBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
-		if (!isLocalPlayer) {
+	void FixedUpdate ()
+	{
+		if (!isLocalPlayer || !canInput)
+		{
 			return;
-		} else {
-			if (canInput)
-			{
-				Turn();
-				Move();
-			}
 		}
+		Turn();
+		Move();	
 	}
 
 	void ChangeHealth(int health)
@@ -152,7 +152,7 @@ public class ShipManager : NetworkBehaviour {
 
 	IEnumerator Respawn(){
 		yield return new WaitForSeconds (5f);
-
+		ChangeHealth(MaxHP);
 		transform.position = Origin;
 		IsDead = false;
 		canInput = true;
@@ -193,20 +193,37 @@ public class ShipManager : NetworkBehaviour {
 			HitscanShoot ();
 		}
 	}
-
+	 
 	[Client]
-	void HitscanShoot(){
+	void HitscanShoot()
+	{
+		Transform tiroPos = null;
+		switch (laser.index)
+		{
+			case 1:
+				tiroPos = laser.shotPosition1;
+				laser.index++;
+				break;
+			case 2:
+				tiroPos = laser.shotPosition2;
+				laser.index--;
+				break;
+		}
 		RaycastHit hit;
 		Debug.DrawRay(transform.position, Camera.main.transform.forward);
-		//StartCoroutine(laser.DrawLine(Camera.main.transform.forward * RangeBullet));
-		if (Physics.Raycast (transform.position, Camera.main.transform.forward, out hit, RangeBullet,enemyLayer)){
-			Debug.Log (hit.collider.name);
-			if (hit.collider != null) {
-				Debug.Log ("Entrou 1");
+
+		laser.myLine.SetPosition(0, tiroPos.position);
+		StartCoroutine(laser.ShotEffects());
+		if (Physics.Raycast (Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)), Camera.main.transform.forward , out hit, RangeBullet, enemyLayer))
+		{
+			laser.myLine.SetPosition(1, hit.point);
+		if (hit.collider != null) {
 				CmdEnemyPlayerHit (hit.collider.name,DamageBullet);
-				//hit.collider.GetComponent<DummyShip>().TakeDamage(DamageBullet);
-				Debug.Log ("Entrou 2");
 			}
+		}
+		else
+		{
+			laser.myLine.SetPosition(1, Camera.main.transform.position + (Camera.main.transform.forward * RangeBullet));
 		}
 		canFire = false;
 		TimerBullet = 0;
@@ -234,11 +251,5 @@ public class ShipManager : NetworkBehaviour {
 		{
 			canFire = true;
 		}
-	}
-	protected void GrabComponents(){
-		bxcol = GetComponent<BoxCollider>();
-		rb = GetComponent<Rigidbody>();
-		myRenderer = GetComponentInChildren<MeshRenderer>();
-		laser = GetComponentInChildren<RayView>();
 	}
 }

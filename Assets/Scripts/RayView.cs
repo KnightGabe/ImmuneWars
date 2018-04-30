@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class RayView : MonoBehaviour {
 
-	LineRenderer myLine;
+	public LineRenderer myLine;
+	public AudioSource shotSound;
+	public Transform shotPosition1, shotPosition2;
+	public int index = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -16,13 +19,13 @@ public class RayView : MonoBehaviour {
 		
 	}
 	
-	public IEnumerator DrawLine(Vector3 destination)
+	public IEnumerator ShotEffects()
 	{
+		//shotSound.Play();
 		myLine.enabled = true;
-		myLine.SetPosition(0, transform.position);
-		myLine.SetPosition(1, destination);
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(0.02f);
 		myLine.enabled = false;
+		
 	}
 	
 }

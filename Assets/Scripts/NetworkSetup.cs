@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(ShipManager))]
 public class NetworkSetup :  NetworkBehaviour {
@@ -16,7 +15,6 @@ public class NetworkSetup :  NetworkBehaviour {
 	Camera lobbyCamera;
 
 	ShipManager player;
-
 	//CursorLockMode currentMode;
 
 	// Use this for initialization
@@ -36,7 +34,6 @@ public class NetworkSetup :  NetworkBehaviour {
 			{
 				lobbyCamera.gameObject.SetActive(false);
 			}
-
 		}
 	}
 
