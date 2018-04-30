@@ -31,7 +31,7 @@ public class DummyShip : ShipManager {
 	void CmdSkillA(){
 		GameObject nTiro = Instantiate (tiro,transform.position,Quaternion.identity);
 		nTiro.GetComponent<Rigidbody>().velocity=transform.forward*SpeedBullet;
-		nTiro.GetComponent<SkillAScript> ().Reference = this.gameObject;
+		nTiro.GetComponent<SkillAScript>().Reference = this;
 		//nTiro.GetComponent<SkillAScript> ().AddSpeed (SpeedBullet);
 		NetworkServer.Spawn (nTiro);
 

@@ -48,9 +48,9 @@ public class ShipManager : NetworkBehaviour {
 	protected int MaxHP;
 	[SerializeField]
 	[Header("Misc")]
-	protected LayerMask enemyLayer;
+	public LayerMask enemyLayer;
 	[SerializeField]
-	protected LayerMask myLayer;
+	public LayerMask myLayer;
 	[SyncVar(hook = "ChangeHealth")]
 	public int CurrentHP;
 	public bool canInput = true;

@@ -1,28 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SkillAScript : MonoBehaviour {
+public class SkillAScript : NetworkBehaviour {
 
-	public GameObject Reference;
+	public ShipManager Reference;
 	string target;
-	// Use this for initialization
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	void OnCollisonEnter(Collision col){
-		if (col.gameObject.layer.ToString() == "PlayerRemoto") {
+	void OnTriggerEnter(Collider col)
+	{
+		if (Reference.enemyLayer == (Reference.enemyLayer | ( 1 << col.gameObject.layer)))
+		{
 			target = col.gameObject.name;
-			Destroy (this.gameObject);
+			Reference.CmdEnemyPlayerHit(target, Reference.GetComponent<DummyShip>().DamageSkillA);
+			gameObject.SetActive(false);
 		}	
-	}
-
-	/*public void AddSpeed (float speed){
-		self.velocity = Reference.transform.forward * speed;
-	}*/
-	void OnDestroy(){
-		Reference.GetComponent<ShipManager> ().CmdEnemyPlayerHit (target, Reference.GetComponent<DummyShip> ().DamageSkillA);
 	}
 }
