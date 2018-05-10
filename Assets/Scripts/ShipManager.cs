@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class ShipManager : NetworkBehaviour {
+public class ShipManager : MonoBehaviour {
 
 	[Header("Objetos e Componentes")]
 	public GameObject tiro;
@@ -51,11 +51,10 @@ public class ShipManager : NetworkBehaviour {
 	public LayerMask enemyLayer;
 	[SerializeField]
 	public LayerMask myLayer;
-	[SyncVar(hook = "ChangeHealth")]
+	
 	public int CurrentHP;
 	public bool canInput = true;
 	public bool canFire = true;
-	[SyncVar]
 	private bool IsDead=false;
 	public bool isRlyDead{
 		get{ return IsDead; }
@@ -76,7 +75,6 @@ public class ShipManager : NetworkBehaviour {
 		myRenderer = GetComponentInChildren<MeshRenderer>();
 		laser = GetComponentInChildren<RayView>();
 		Origin = transform.position;
-		if (isLocalPlayer)
 		{
 			myRenderer.material.color = Color.blue;
 			InstantiateCanvas();
@@ -84,16 +82,12 @@ public class ShipManager : NetworkBehaviour {
 			HealthBar.maxValue = MaxHP;
 			HealthBar.value = MaxHP;
 		}
-		else
-		{
-			myRenderer.material.color = Color.red;
-		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		if (!isLocalPlayer || !canInput)
+		if (!canInput)
 		{
 			return;
 		}
@@ -117,28 +111,21 @@ public class ShipManager : NetworkBehaviour {
 	}
 	protected virtual void Update()
 	{
-		if (!isLocalPlayer) {
-			return;
-		} else {
 			if (canInput) {
 				GetInputs ();
 				Comandos ();
 			}
 			CooldownTimer ();
-		}
+		
 	}
-	[ClientRpc]
-	public void RpcTakeDamage(int damage)
+	public void TakeDamage(int damage)
 	{
-		if (isServer)
-		{
 			CurrentHP -= damage;
 			if (CurrentHP <= 0)
 			{
 				CurrentHP = 0;
 				KillPlayer();
 			}
-		}
 	}
 
 	private void KillPlayer()
@@ -193,8 +180,6 @@ public class ShipManager : NetworkBehaviour {
 			HitscanShoot ();
 		}
 	}
-	 
-	[Client]
 	void HitscanShoot()
 	{
 		Transform tiroPos = null;
@@ -218,7 +203,7 @@ public class ShipManager : NetworkBehaviour {
 		{
 			laser.myLine.SetPosition(1, hit.point);
 		if (hit.collider != null) {
-				CmdEnemyPlayerHit (hit.collider.name,DamageBullet);
+				EnemyPlayerHit (hit.collider.name,DamageBullet);
 			}
 		}
 		else
@@ -228,10 +213,9 @@ public class ShipManager : NetworkBehaviour {
 		canFire = false;
 		TimerBullet = 0;
 	}
-	[Command]
-	public void CmdEnemyPlayerHit(string target, int damage){
+	public void EnemyPlayerHit(string target, int damage){
 		ShipManager player = GameManager.GetPlayer (target);
-		player.RpcTakeDamage (damage);
+		player.TakeDamage (damage);
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -241,7 +225,7 @@ public class ShipManager : NetworkBehaviour {
 			BulletScript enemyBullet = other.GetComponent<BulletScript>();
 			if (enemyBullet != null)
 			{
-				RpcTakeDamage(enemyBullet.damage);
+				TakeDamage(enemyBullet.damage);
 			}
 		}
 	}

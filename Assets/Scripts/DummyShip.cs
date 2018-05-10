@@ -24,16 +24,15 @@ public class DummyShip : ShipManager {
 	{
 		base.Comandos ();
 		if (Input.GetKeyDown (KeyCode.F) && !OnCDSkillA) {
-			CmdSkillA ();
+			SkillA ();
 		}
 	}
-	[Command]
-	void CmdSkillA(){
+
+	void SkillA(){
 		GameObject nTiro = Instantiate (tiro,transform.position,Quaternion.identity);
 		nTiro.GetComponent<Rigidbody>().velocity=transform.forward*SpeedBullet;
 		nTiro.GetComponent<SkillAScript>().Reference = this;
 		//nTiro.GetComponent<SkillAScript> ().AddSpeed (SpeedBullet);
-		NetworkServer.Spawn (nTiro);
 
 		OnCDSkillA = true;
 		TimerSkillA = 0f;

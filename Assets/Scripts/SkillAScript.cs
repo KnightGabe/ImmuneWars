@@ -13,7 +13,7 @@ public class SkillAScript : NetworkBehaviour {
 		if (Reference.enemyLayer == (Reference.enemyLayer | ( 1 << col.gameObject.layer)))
 		{
 			target = col.gameObject.name;
-			Reference.CmdEnemyPlayerHit(target, Reference.GetComponent<DummyShip>().DamageSkillA);
+			Reference.EnemyPlayerHit(target, Reference.GetComponent<DummyShip>().DamageSkillA);
 			gameObject.SetActive(false);
 		}	
 	}
