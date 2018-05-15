@@ -5,10 +5,14 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour {
 
 	ShipMovement ship;
+	PrimaryFire gun;
+	SkillAScript skillA;
 
 	// Use this for initialization
 	void Start () {
 		ship = GetComponent<ShipMovement>();
+		gun = GetComponent<PrimaryFire>();
+		skillA = GetComponent<SkillAScript>();
 	}
 	
 	// Update is called once per frame
@@ -23,5 +27,13 @@ public class PlayerInput : MonoBehaviour {
 		ship.RotateY = Input.GetAxis("Mouse X");
 		ship.RotateX = Input.GetAxis("Mouse Y");
 		ship.Vertical = Input.GetAxis("Jump");
+		if (Input.GetKeyDown(KeyCode.Mouse0))
+		{
+			gun.Comandos();
+		}
+		if (Input.GetKeyDown(KeyCode.F))
+		{
+			skillA.ShootSkill();
+		}
 	}
 }

@@ -22,10 +22,7 @@ GameObject:
   - component: {fileID: 33510516892675262}
   - component: {fileID: 135617824504049836}
   - component: {fileID: 23771976567869546}
-  - component: {fileID: 114158573374891018}
-  - component: {fileID: 114224951108709810}
   - component: {fileID: 54981719503499606}
-  - component: {fileID: 114422558800545728}
   - component: {fileID: 114869156488423524}
   m_Layer: 0
   m_Name: Bullet
@@ -103,71 +100,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &114158573374891018
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1456357596765964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 188
-    i1: 90
-    i2: 234
-    i3: 163
-    i4: 248
-    i5: 27
-    i6: 139
-    i7: 52
-    i8: 104
-    i9: 82
-    i10: 105
-    i11: 124
-    i12: 182
-    i13: 70
-    i14: 175
-    i15: 77
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &114224951108709810
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1456357596765964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.033333335
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
---- !u!114 &114422558800545728
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1456357596765964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67ca4f6841a41c45a80b4647851c683, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Reference: {fileID: 0}
 --- !u!114 &114869156488423524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,6 +112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   duration: 1
 --- !u!135 &135617824504049836
 SphereCollider:

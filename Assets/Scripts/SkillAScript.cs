@@ -1,20 +1,53 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class SkillAScript : NetworkBehaviour {
+public class SkillAScript : MonoBehaviour {
 
-	public ShipManager Reference;
-	string target;
-	
-	void OnTriggerEnter(Collider col)
+	PlayerSetup reference;
+	[SerializeField]
+	protected float bulletSpeed;
+	[SerializeField]
+	private float cooldownTime;
+	public bool canShoot;
+
+	public GameObject missile;
+
+	private float timer;
+
+	private void Start()
 	{
-		if (Reference.enemyLayer == (Reference.enemyLayer | ( 1 << col.gameObject.layer)))
+		reference = GetComponent<PlayerSetup>();
+		timer = cooldownTime;
+	}
+
+	public void ShootSkill()
+	{
+		if (canShoot)
 		{
-			target = col.gameObject.name;
-			Reference.EnemyPlayerHit(target, Reference.GetComponent<DummyShip>().DamageSkillA);
-			gameObject.SetActive(false);
-		}	
+			GameObject missileClone = Instantiate(missile, transform.position, Quaternion.identity);
+			missileClone.GetComponent<BulletScript>().enemyLayer = reference.enemyLayer;
+			missileClone.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
+		}
+		canShoot = false;
+	}
+
+	private void Update()
+	{
+		if (!canShoot)
+		{
+			timer -= Time.deltaTime;
+			if(timer <= 0)
+			{
+				ResetCooldown();
+			}
+		}
+	}
+
+	private void ResetCooldown()
+	{
+		canShoot = true;
+		timer = cooldownTime;
 	}
 }

@@ -10,7 +10,9 @@ public class PlayerSetup : MonoBehaviour {
 	public LayerMask myLayer;
 	private Vector3 Origin;
 	private MeshRenderer myRenderer;
-	private PlayerHealth health;
+	public PlayerHealth health;
+	public bool isDead;
+	public bool canInput;
 
 	private void Start()
 	{
@@ -26,9 +28,8 @@ public class PlayerSetup : MonoBehaviour {
 
 	public void KillPlayer()
 	{
-		IsDead = true;
+		isDead = true;
 		canInput = false;
-		bxcol.enabled = false;
 		Debug.Log(gameObject.name + "Dead");
 		StartCoroutine(Respawn());
 	}
@@ -36,10 +37,9 @@ public class PlayerSetup : MonoBehaviour {
 	public IEnumerator Respawn()
 	{
 		yield return new WaitForSeconds(5f);
-		health.ChangeHealth(MaxHP);
+		health.ChangeHealth(health.MaxHP);
 		transform.position = Origin;
-		IsDead = false;
+		isDead = false;
 		canInput = true;
-		bxcol.enabled = true;
 	}
 }

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class RayView : MonoBehaviour {
 
-	public LineRenderer myLine;
-	public AudioSource shotSound;
+	private LineRenderer myLine;
+	private AudioSource shotSound;
 	public Transform shotPosition1, shotPosition2;
+	Transform tiroPos;
 	public int index = 1;
 
 	// Use this for initialization
@@ -22,10 +23,34 @@ public class RayView : MonoBehaviour {
 	public IEnumerator ShotEffects()
 	{
 		//shotSound.Play();
+		SwitchLaser();
+		SetLaserPositions();
 		myLine.enabled = true;
 		yield return new WaitForSeconds(0.02f);
 		myLine.enabled = false;
-		
+	}
+
+	private void SetLaserPositions()
+	{
+		myLine.SetPosition(0, tiroPos.position);
+		RaycastHit hit;
+		if (Physics.Raycast(Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)), Camera.main.transform.forward, out hit))
+			myLine.SetPosition(1, hit.point);
+	}
+
+	void SwitchLaser()
+	{
+		switch (index)
+		{
+			case 1:
+				tiroPos = shotPosition1;
+				index++;
+				break;
+			case 2:
+				tiroPos = shotPosition2;
+				index--;
+				break;
+		}
 	}
 	
 }

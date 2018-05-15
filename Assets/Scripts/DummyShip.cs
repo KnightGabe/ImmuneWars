@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class DummyShip : ShipManager {
 
 	// Use this for initialization
-	private float CooldownSkillA = 2f;
+	/*private float CooldownSkillA = 2f;
 	private float TimerSkillA=0f;
 	private bool OnCDSkillA;
 	private float RangeSkillA=100f;
@@ -43,5 +43,5 @@ public class DummyShip : ShipManager {
 		if (TimerSkillA >= CooldownSkillA){
 			OnCDSkillA = false;
 		}
-	}
+	}*/
 }

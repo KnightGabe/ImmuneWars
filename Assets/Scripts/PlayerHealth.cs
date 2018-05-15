@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 
 	public Slider HealthBar;
-	protected int MaxHP;
+	public int MaxHP;
 	public int CurrentHP;
 	private PlayerSetup respawn;
 
@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour {
 		respawn = GetComponent<PlayerSetup>();
 	}
 
-	void ChangeHealth(int health)
+	public void ChangeHealth(int health)
 	{
 		if (HealthBar != null)
 		{
