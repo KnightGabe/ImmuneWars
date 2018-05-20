@@ -11,9 +11,14 @@ public class PlayerInput : MonoBehaviour {
 	private string rotateYAxis;
 	private string rotateXAxis;
 	private string verticalAxis;
+<<<<<<< HEAD
     private string negThrustAxis;
 
     private int ID;
+=======
+
+	private int ID;
+>>>>>>> 51b20b77742a5b9844a1a4f2ec8ed25d557488e7
 
 	// Use this for initialization
 	void Start() {
@@ -28,6 +33,7 @@ public class PlayerInput : MonoBehaviour {
 	
 	public void SetPlayerID(int ID)
 	{
+<<<<<<< HEAD
 		verticalAxis = "Vertical" + ID.ToString();
 		sidewaysAxis = "Horizontal" + ID.ToString();
 		rotateYAxis = "HorizontalR" + ID.ToString();
@@ -36,18 +42,35 @@ public class PlayerInput : MonoBehaviour {
         negThrustAxis = "-Thrust" + ID.ToString();
 
         this.ID = ID;
+=======
+		thrustAxis = "Vertical" + ID.ToString();
+		sidewaysAxis = "Horizontal" + ID.ToString();
+		rotateYAxis = "HorizontalR" + ID.ToString();
+		rotateXAxis = "VerticalR" + ID.ToString();
+		verticalAxis = "Jump" + ID.ToString();
+		this.ID = ID;
+>>>>>>> 51b20b77742a5b9844a1a4f2ec8ed25d557488e7
 	}
 
 	void PlayerInputs()
 	{
+<<<<<<< HEAD
 		player.Movement.Thrust = Input.GetAxis(thrustAxis) - Input.GetAxis(negThrustAxis);
+=======
+		player.Movement.Thrust = Input.GetAxis(thrustAxis);
+>>>>>>> 51b20b77742a5b9844a1a4f2ec8ed25d557488e7
 		player.Movement.SideWays = Input.GetAxis(sidewaysAxis);
 		player.Movement.RotateY = Input.GetAxis(rotateYAxis);
 		player.Movement.RotateX = Input.GetAxis(rotateXAxis);
 		player.Movement.Vertical = Input.GetAxis(verticalAxis);
+<<<<<<< HEAD
 
 
         switch (ID)
+=======
+		
+		switch (ID)
+>>>>>>> 51b20b77742a5b9844a1a4f2ec8ed25d557488e7
 		{
 			case 1:
 				if (Input.GetKeyDown(KeyCode.Joystick1Button5))
