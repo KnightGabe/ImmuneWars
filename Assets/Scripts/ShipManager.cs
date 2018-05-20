@@ -3,14 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipManager : MonoBehaviour {
-	
+
+	private string playerId;
+
+	private ShipMovement movement;
+
+	private SkillAScript skillA;
+
+	private PrimaryFire fire;
+
+	public string PlayerId
+	{
+		get
+		{
+			return playerId;
+		}
+
+		set
+		{
+			playerId = value;
+		}
+	}
+
+	public ShipMovement Movement
+	{
+		get
+		{
+			return movement;
+		}
+
+		set
+		{
+			movement = value;
+		}
+	}
+
+	public SkillAScript SkillA
+	{
+		get
+		{
+			return skillA;
+		}
+
+		set
+		{
+			skillA = value;
+		}
+	}
+
+	public PrimaryFire Fire
+	{
+		get
+		{
+			return fire;
+		}
+
+		set
+		{
+			fire = value;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		Movement = GetComponent<ShipMovement>();
+		SkillA = GetComponent<SkillAScript>();
+		Fire = GetComponent<PrimaryFire>();
 	}
 }

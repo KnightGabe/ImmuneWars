@@ -4,36 +4,88 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
 
-	ShipMovement ship;
-	PrimaryFire gun;
-	SkillAScript skillA;
+	private ShipManager player;
+
+	private string thrustAxis;
+	private string sidewaysAxis;
+	private string rotateYAxis;
+	private string rotateXAxis;
+	private string verticalAxis;
+
+	private int ID;
 
 	// Use this for initialization
-	void Start () {
-		ship = GetComponent<ShipMovement>();
-		gun = GetComponent<PrimaryFire>();
-		skillA = GetComponent<SkillAScript>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		GetInputs();
+	void Start() {
+		SetPlayerID(1);
+		player = GetComponent<ShipManager>();
 	}
 
-	void GetInputs()
+	// Update is called once per frame
+	void Update() {
+		PlayerInputs();
+	}
+	
+	public void SetPlayerID(int ID)
 	{
-		ship.Thrust = Input.GetAxis("Vertical");
-		ship.SideWays = Input.GetAxis("Horizontal");
-		ship.RotateY = Input.GetAxis("Mouse X");
-		ship.RotateX = Input.GetAxis("Mouse Y");
-		ship.Vertical = Input.GetAxis("Jump");
-		if (Input.GetKeyDown(KeyCode.Mouse0))
+		thrustAxis = "Vertical" + ID.ToString();
+		sidewaysAxis = "Horizontal" + ID.ToString();
+		rotateYAxis = "HorizontalR" + ID.ToString();
+		rotateXAxis = "VerticalR" + ID.ToString();
+		verticalAxis = "Jump" + ID.ToString();
+		this.ID = ID;
+	}
+
+	void PlayerInputs()
+	{
+		player.Movement.Thrust = Input.GetAxis(thrustAxis);
+		player.Movement.SideWays = Input.GetAxis(sidewaysAxis);
+		player.Movement.RotateY = Input.GetAxis(rotateYAxis);
+		player.Movement.RotateX = Input.GetAxis(rotateXAxis);
+		player.Movement.Vertical = Input.GetAxis(verticalAxis);
+		
+		switch (ID)
 		{
-			gun.Comandos();
+			case 1:
+				if (Input.GetKeyDown(KeyCode.Joystick1Button5))
+				{
+					player.Fire.Comandos();
+				}
+				if (Input.GetKeyDown(KeyCode.Joystick1Button4))
+				{
+					player.SkillA.ShootSkill();
+				}
+				break;
+			case 2:
+				if (Input.GetKeyDown(KeyCode.Joystick2Button5))
+				{
+					player.Fire.Comandos();
+				}
+				if (Input.GetKeyDown(KeyCode.Joystick2Button4))
+				{
+					player.SkillA.ShootSkill();
+				}
+				break;
+			case 3:
+				if (Input.GetKeyDown(KeyCode.Joystick3Button5))
+				{
+					player.Fire.Comandos();
+				}
+				if (Input.GetKeyDown(KeyCode.Joystick3Button4))
+				{
+					player.SkillA.ShootSkill();
+				}
+				break;
+			case 4:
+				if (Input.GetKeyDown(KeyCode.Joystick4Button5))
+				{
+					player.Fire.Comandos();
+				}
+				if (Input.GetKeyDown(KeyCode.Joystick4Button4))
+				{
+					player.SkillA.ShootSkill();
+				}
+				break;
 		}
-		if (Input.GetKeyDown(KeyCode.F))
-		{
-			skillA.ShootSkill();
-		}
+		
 	}
 }
