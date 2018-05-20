@@ -10,7 +10,7 @@ public class SkillAScript : MonoBehaviour {
 	protected float bulletSpeed;
 	[SerializeField]
 	private float cooldownTime;
-	public bool canShoot;
+	public bool canShoot = true;
 
 	public GameObject missile;
 

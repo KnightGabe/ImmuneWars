@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour {
 	private static Dictionary<string, PlayerSetup> players = new Dictionary<string, PlayerSetup>();
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame

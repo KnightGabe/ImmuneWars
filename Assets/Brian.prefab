@@ -53,13 +53,17 @@ GameObject:
   - component: {fileID: 4061360615959046}
   - component: {fileID: 54323696496485116}
   - component: {fileID: 65726398433516750}
-  - component: {fileID: 114775869903124798}
   - component: {fileID: 33640490134196740}
   - component: {fileID: 23818133282594258}
-  - component: {fileID: 114407374997052166}
-  - component: {fileID: 114301773678019598}
   - component: {fileID: 82051773699550510}
   - component: {fileID: 120028850371517062}
+  - component: {fileID: 114346851249358472}
+  - component: {fileID: 114641545299373584}
+  - component: {fileID: 114708655038782748}
+  - component: {fileID: 114308016462251426}
+  - component: {fileID: 114313802090960586}
+  - component: {fileID: 114649447382121372}
+  - component: {fileID: 114128699472871820}
   m_Layer: 8
   m_Name: Brian
   m_TagString: Player
@@ -124,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340439899769664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 167.70512, y: -60.437714, z: -59.75469}
+  m_LocalPosition: {x: 68.6, y: -15.5, z: 3.8722274}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4705209039842166}
@@ -511,6 +515,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114128699472871820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340439899769664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67ca4f6841a41c45a80b4647851c683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 150
+  cooldownTime: 3
+  canShoot: 0
+  missile: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
 --- !u!114 &114218346912489458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -524,7 +543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4705209039842166}
   smoothFollow: 0.125
---- !u!114 &114301773678019598
+--- !u!114 &114308016462251426
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -535,12 +554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be6871e185f10c847ba1fbfd32e99fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myLine: {fileID: 120028850371517062}
-  shotSound: {fileID: 0}
   shotPosition1: {fileID: 4227534543010294}
   shotPosition2: {fileID: 4907399362162356}
   index: 1
---- !u!114 &114407374997052166
+--- !u!114 &114313802090960586
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -548,34 +565,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 1340439899769664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bffd3b96fd65bb1488ec32b64530ee43, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c976ee5889c5bf4888f6af02c6f2527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiro: {fileID: 1456357596765964, guid: bc5aeaa3f81b8b346852697cb646af4d, type: 2}
-  brianCanvas: {fileID: 223489701091724216, guid: 0e9844e1bddff854faeff795a28179c4,
-    type: 2}
-  turnSpeed: 15
-  forwardSpeed: 15
-  sideSpeed: 15
-  verticalSpeed: 15
-  baseSpeed: 5
-  smoothRotation: 0.125
-  DamageBullet: 12
-  RangeBullet: 100
-  SpeedBullet: 100
-  CooldownBullet: 0.3
+  HealthBar: {fileID: 0}
   MaxHP: 100
+  CurrentHP: 0
+--- !u!114 &114346851249358472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340439899769664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67ca4f6841a41c45a80b4647851c683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 0
+  cooldownTime: 0
+  canShoot: 0
+  missile: {fileID: 0}
+--- !u!114 &114641545299373584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340439899769664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450c8ff2c17c8b24f93fcd429bb21a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSpeed: 5
+  forwardSpeed: 5
+  sideSpeed: 2
+  verticalSpeed: 2
+  baseSpeed: 10
+  smoothRotation: 0.125
+--- !u!114 &114649447382121372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340439899769664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2a98b8dbd36334ba0378e3e3a000c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   myLayer:
     serializedVersion: 2
     m_Bits: 256
-  CurrentHP: 0
-  canInput: 1
-  canFire: 0
-  DamageSkillA: 100
---- !u!114 &114775869903124798
+  health: {fileID: 0}
+  isDead: 0
+  canInput: 0
+--- !u!114 &114708655038782748
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -583,19 +631,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1340439899769664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a7c11e8898e0b14593156314c3319c0, type: 3}
+  m_Script: {fileID: 11500000, guid: c62e7f7ab38fc8043b4efcb2931a4fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SyncVarDirtyBits: 0
-  m_LastSendTime: 0
-  m_SyncVarGuard: 0
-  m_MyView: {fileID: 0}
-  disableObjects:
-  - {fileID: 20377282292357556}
-  - {fileID: 81405229243839902}
-  RemotePlayerLayer: PlayerRemoto
-  lobbyCamera: {fileID: 0}
-  player: {fileID: 0}
+  bulletDamage: 15
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  bulletRange: 100
+  bulletCooldown: 0.5
+  canFire: 1
 --- !u!120 &120028850371517062
 LineRenderer:
   m_ObjectHideFlags: 1
