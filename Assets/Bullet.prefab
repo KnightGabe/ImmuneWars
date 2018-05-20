@@ -166,7 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67ca4f6841a41c45a80b4647851c683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reference: {fileID: 0}
+  bulletSpeed: 0
+  cooldownTime: 0
+  canShoot: 1
+  missile: {fileID: 0}
 --- !u!135 &135617824504049836
 SphereCollider:
   m_ObjectHideFlags: 1
