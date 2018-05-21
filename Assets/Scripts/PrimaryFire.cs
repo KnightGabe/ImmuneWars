@@ -20,12 +20,18 @@ public class PrimaryFire : MonoBehaviour {
     private Camera myCam;
 
 	public bool canFire = true;
+
+	private AudioSource source;
+
+	public AudioClip shot;
+
 	RayView laser;
 
 	private void Start()
 	{
 		laser = GetComponent<RayView>();
         myCam = GetComponentInChildren<Camera>();
+		source = GetComponent<AudioSource>();
 	}
 
 	private void Update()
@@ -45,6 +51,7 @@ public class PrimaryFire : MonoBehaviour {
 	void HitscanShoot()
 	{
 		StartCoroutine(laser.ShotEffects());
+		source.PlayOneShot(shot);
 		RaycastHit hit;
 		if (Physics.Raycast(myCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)), myCam.transform.forward, out hit, bulletRange))
 		{

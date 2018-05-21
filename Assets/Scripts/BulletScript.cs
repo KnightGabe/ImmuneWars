@@ -25,6 +25,12 @@ public class BulletScript : MonoBehaviour {
 		{
 			col.GetComponent<PlayerHealth>().TakeDamage(damage);
 			gameObject.SetActive(false);
+			var enemyKill = col.GetComponent<PlayerSetup>();
+			if (!enemyKill.isDead)
+			{
+				emitter.GetComponent<PlayerSetup>().score++;
+				enemyKill.isDead = true;
+			}
 		}
 	}
 }

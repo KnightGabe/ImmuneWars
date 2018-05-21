@@ -434,7 +434,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1404291831936178}
-  m_LocalRotation: {x: 0.000004328788, y: -0.000035144392, z: 0.02232, w: 0.9997509}
+  m_LocalRotation: {x: 0.0000050822273, y: 0.000026417896, z: 0.020936992, w: 0.99978083}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -615,11 +615,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 12e2efef426f0d24c8a549d569ce2847, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.35
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1076,7 +1076,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 36a230f9c6f95e34b811f004fe69dd14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e98de03abe190614cbbdb56d68533dbc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1258,6 +1258,7 @@ MonoBehaviour:
   bulletRange: 100
   bulletCooldown: 0.5
   canFire: 1
+  shot: {fileID: 8300000, guid: cd4cc5abfdc58d649abe576b5d9ee36e, type: 3}
 --- !u!114 &114740646993100196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1542,7 +1543,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1643705878638222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -224.00002, y: -358, z: 0}
+  m_LocalPosition: {x: -331.20236, y: -357.9995, z: 0.0007343292}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224475583193772634}
@@ -1550,9 +1551,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -224, y: -308}
+  m_AnchoredPosition: {x: -331.20236, y: -307.9995}
   m_SizeDelta: {x: 214.4, y: 22.6}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224296839219105284
 RectTransform:
   m_ObjectHideFlags: 1
