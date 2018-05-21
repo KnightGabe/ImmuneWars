@@ -111,10 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcf44b8a17f0a848a604a87896401be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  damage: 50
+  emitter: {fileID: 0}
   duration: 1
 --- !u!135 &135617824504049836
 SphereCollider:

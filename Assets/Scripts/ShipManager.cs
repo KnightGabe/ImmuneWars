@@ -12,6 +12,8 @@ public class ShipManager : MonoBehaviour {
 
 	private PrimaryFire fire;
 
+    private PlayerSetup setup;
+
 	public string PlayerId
 	{
 		get
@@ -64,10 +66,24 @@ public class ShipManager : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
+    public PlayerSetup Setup
+    {
+        get
+        {
+            return setup;
+        }
+
+        set
+        {
+            setup = value;
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
 		Movement = GetComponent<ShipMovement>();
 		SkillA = GetComponent<SkillAScript>();
 		Fire = GetComponent<PrimaryFire>();
+        Setup = GetComponent<PlayerSetup>();
 	}
 }

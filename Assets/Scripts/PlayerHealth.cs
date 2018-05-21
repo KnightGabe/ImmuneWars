@@ -5,31 +5,41 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
-	public Slider HealthBar;
+	public RectTransform HealthBar;
 	public int MaxHP;
 	public int CurrentHP;
-	private PlayerSetup respawn;
 
 	private void Start()
 	{
 		CurrentHP = MaxHP;
-		respawn = GetComponent<PlayerSetup>();
 	}
 
 	public void ChangeHealth(int health)
 	{
 		if (HealthBar != null)
 		{
-			HealthBar.value = health;
+			HealthBar.sizeDelta = new Vector2(CurrentHP, HealthBar.sizeDelta.y);
 		}
 	}
 	public void TakeDamage(int damage)
 	{
 		CurrentHP -= damage;
+        ChangeHealth(CurrentHP);
+        Debug.Log(damage);
 		if (CurrentHP <= 0)
 		{
 			CurrentHP = 0;
-			respawn.KillPlayer();
+			KillPlayer();
 		}
 	}
+	public void KillPlayer()
+	{
+		//canInput = false;
+		Debug.Log(gameObject.name + "Dead");
+        var deadPlayer = GetComponent<PlayerSetup>();
+        if (!deadPlayer.isDead)
+        {
+            StartCoroutine(deadPlayer.Respawn());
+        }
+    }
 }

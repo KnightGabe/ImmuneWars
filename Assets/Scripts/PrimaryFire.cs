@@ -46,25 +46,30 @@ public class PrimaryFire : MonoBehaviour {
 	{
 		StartCoroutine(laser.ShotEffects());
 		RaycastHit hit;
-		if (Physics.Raycast(myCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)), myCam.transform.forward, out hit, bulletDamage, enemyLayer))
+		if (Physics.Raycast(myCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)), myCam.transform.forward, out hit, bulletRange))
 		{
-			EnemyPlayerHit(hit.collider.name, bulletDamage);
+			if ((!hit.collider.gameObject.Equals (gameObject)) && (hit.collider.GetComponent<PlayerHealth> () != null)) {
+				hit.collider.GetComponent<PlayerHealth> ().TakeDamage (bulletDamage);
+                if (hit.collider.GetComponent<PlayerHealth>().CurrentHP <= 0)
+                {
+                    var enemyKill = hit.collider.GetComponent<PlayerSetup>();
+                    if (!enemyKill.isDead)
+                    {
+                        GetComponent<PlayerSetup>().score++;
+                        enemyKill.isDead = true;
+                    }
+                }
+			}
 		}
 		canFire = false;
 		bulletTimer = 0;
 	}
 
-	public virtual void Comandos()
+    public virtual void Comandos()
 	{
 		if (canFire)
 		{
 			HitscanShoot();
 		}
-	}
-
-	public void EnemyPlayerHit(string target, int damage)
-	{
-		PlayerSetup player = GameManager.GetPlayer(target);
-		player.health.TakeDamage(damage);
 	}
 }

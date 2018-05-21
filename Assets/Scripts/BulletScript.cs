@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour {
 
 	public int damage;
-	public LayerMask enemyLayer;
+	public GameObject emitter;
 
 	public float duration = 1f;
 
@@ -21,7 +21,7 @@ public class BulletScript : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-		if (enemyLayer.Equals(col.gameObject.layer))
+		if (!emitter.Equals(col.gameObject)&&(col.GetComponent<PlayerHealth>()!=null))
 		{
 			col.GetComponent<PlayerHealth>().TakeDamage(damage);
 			gameObject.SetActive(false);

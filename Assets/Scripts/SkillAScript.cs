@@ -30,7 +30,7 @@ public class SkillAScript : MonoBehaviour {
 		if (canShoot)
         {
 			GameObject missileClone = Instantiate(missile, transform.position, Quaternion.identity);
-			missileClone.GetComponent<BulletScript>().enemyLayer = reference.enemyLayer;
+			missileClone.GetComponent<BulletScript>().emitter = gameObject;
 			missileClone.GetComponent<Rigidbody>().velocity = myCam.transform.forward * bulletSpeed;
 		}
 		canShoot = false;

@@ -24,7 +24,10 @@ public class PlayerInput : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		PlayerInputs();
+        if (player.Setup.canInput)
+        {
+            PlayerInputs();
+        }
 	}
 	
 	public void SetPlayerID(int ID)
